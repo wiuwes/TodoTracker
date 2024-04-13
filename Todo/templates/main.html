@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <form action="/" method="post">
+        {% csrf_token %}
+            <div>
+              {{ form.title }}
+            </div>
+            <br>
+            {{ form.text }}
+            <br>
+            {{ form.status }}
+            <br>
+        <button class="" type="submit" name = "form" value="NewNote">Submit</button>
+    </form>
+    {% for i in data %}
+      <div class="">
+        <a href="/comm/note/{{i.pk}}/">{{ i.title }}</a>
+        <br>
+        Executor: {{ i.executor }}
+        <br>
+        Creation time: {{ i.date }}
+        <br>
+        Date of last status update: {{ i.dateoflsu }}
+        <br>
+        status:
+        {% if username == i.executor %}
+        <form action="/" method="post">
+          {% csrf_token %}
+          <select name="status" id="id_process" type = "submit">
+            <option value="0" {% if i.status == "0" %} selected {% endif %}>open</option>
+            <option value="1" {% if i.status == "1" %} selected {% endif %}>in process</option>
+            <option value="2" {% if i.status == "2" %} selected {% endif %}>verefication needed</option>
+            <option value="3" {% if i.status == "3" %} selected {% endif %}>close</option>
+          </select>
+          <button class=""  name="form" id="id_form" value="{{ i.pk }}">Edit</button>
+        </form>
+        {% endif %}
+        {% if username != i.executor %}
+          {% if i.status == "0" %} open {% endif %}
+          {% if i.status == "1" %} in process {% endif %}
+          {% if i.status == "2" %} verefication needed {% endif %}
+          {% if i.status == "3" %} close {% endif %}
+        {% endif %}
+        <br>
+        {{ i.text }}
+        <br>
+        --------
+      </div>
+    {% endfor %}
+  </body>
+</html>

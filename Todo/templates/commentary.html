@@ -1,0 +1,36 @@
+<div class="">
+  {{ data.title }}
+  <br>
+  Executor: {{ data.executor }}
+  <br>
+  Creation time: {{ data.date }}
+  <br>
+  Date of last status update: {{ data.dateoflsu }}
+  <br>
+  {{ data.text }}
+
+
+  {% if data.status == "0" %} open {% endif %}
+  {% if data.status == "1" %} in process {% endif %}
+  {% if data.status == "2" %} verefication needed {% endif %}
+  {% if data.status == "3" %} close {% endif %}
+
+</div>
+
+<form action="" method="post">
+  {% csrf_token %}
+  {{ form }}
+  <input type="submit" value="ok">
+</form>
+
+{% for i in comm %}
+  <div class="">
+    Nickname: {{ i.nickname }}
+    <br>
+    Commentary: <br> {{ i.commentary }}
+    <br>
+    Date: {{ i.date }}
+    <br>
+    -----
+  </div>
+{% endfor %}
